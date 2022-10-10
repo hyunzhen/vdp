@@ -5,8 +5,12 @@
 #include <algorithm> //정렬에 필요
 using namespace std;
 
+// 출력 유저가 대여한 비디오 뜨게 고치기
+// 반납 만들기
+// 예외처리
+// 관리자모드
 
-struct User { // 사용자 구조체 테스트1111
+struct User { // 사용자 구조체 
 	string uname;
 	string unumber;
 	string ucan;
@@ -25,6 +29,7 @@ struct User { // 사용자 구조체 테스트1111
 struct Video { // 비디오 구조체
 	string vname;
 	string vnumber; 
+	string vuser;
 	bool operator <(Video& video) {
 		if (vname == video.vname) // vname이 같으면 vnumber을 기준으로 정렬
 		{
@@ -121,11 +126,121 @@ void search(list<User> & user_list, list<Video> & video_list) //1.검색
 
 
 		if (b == 2) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "이름으로 사용자 검색" << endl;
+			cout << "-------------------" << endl << endl << endl;
+			cout << "검색할 연락처를 입력해주세요." << endl;
+
+			cin >> unumber;
+			bool sc = false;
+
+			list<User>::iterator it;
+
+			system("cls");
+			cout << "이  름  ｜    연락처    ｜  연체  ｜    대출    ｜    반납" << endl;
+			for (it = user_list.begin(); it != user_list.end(); it++) {
+				if ((*it).unumber == unumber) {
+					cout << (*it).uname << "     " << (*it).unumber << "     " << (*it).ucan << "     " << (*it).uday << "     " << (*it).urday << "\n";
+					sc = true;
+				}
+			}
+
+			if (sc == true) {
+				return;
+			}
+
+			cout << "검색 결과가 없습니다." << "\n";
+			return;
 		}
 	}
 
 
 	if (a == 2) {
+		system("cls");
+		cout << "--------------------" << endl;
+		cout << "비디오 대여 프로그램 " << endl;
+		cout << "--------------------" << endl << endl;
+		cout << "1. 이름으로 검색" << endl << "2. 고유번호로 검색" << endl;
+		cout << "-------------------" << endl << endl << endl;
+		cout << "어떻게 검색하시겠습니까? ";
+
+		int b = 0;
+		cin >> b;
+
+		if (!cin)
+		{
+			system("cls");
+			cout << "잘못된 입력입니다." << endl;
+			cin.clear();
+			cin.ignore(10, '\n');
+		}
+
+		if (b == 1) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "이름으로 비디오 검색" << endl;
+			cout << "-------------------" << endl << endl << endl;
+			cout << "검색할 이름을 입력해주세요." << endl;
+
+			cin >> vname;
+			bool sc = false;
+
+			list<Video>::iterator it; // = int i
+
+			system("cls");
+			cout << "이  름  ｜    고유번호     ｜    대출자" << endl;
+			for (it = video_list.begin(); it != video_list.end(); it++) {
+				if ((*it).vname == vname) {
+					cout << (*it).vname << "     " << (*it).vnumber << "     " << (*it).vuser << "\n";
+					sc = true;
+				}
+			}
+
+			if (sc == true) {
+				return;
+			}
+
+			cout << "검색 결과가 없습니다." << "\n";
+			return;
+		}
+
+
+		if (b == 2) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "고유번호로 비디오 검색" << endl;
+			cout << "-------------------" << endl << endl << endl;
+			cout << "검색할 고유번호를 입력해주세요." << endl;
+
+			cin >> vnumber;
+			bool sc = false;
+
+			list<Video>::iterator it;
+
+			system("cls");
+			cout << "이  름  ｜    연락처    ｜  연체  ｜    대출    ｜    반납" << endl;
+			for (it = video_list.begin(); it != video_list.end(); it++) {
+				if ((*it).vnumber == vnumber) {
+					cout << (*it).vname << "     " << (*it).vnumber << "     " << (*it).vuser << "\n";
+					sc = true;
+				}
+			}
+
+			if (sc == true) {
+				return;
+			}
+
+			cout << "검색 결과가 없습니다." << "\n";
+			return;
+		}
+
 	}
 	return;
 
@@ -134,6 +249,62 @@ void search(list<User> & user_list, list<Video> & video_list) //1.검색
 
 void rental(list<User>& user_list, list<Video>& video_list) //2.대여
 {
+	string uname;
+	string unumber;
+	string ucan;
+	string uday;
+	string urday;
+	string vname;
+	string vnumber;
+
+	system("cls");
+	cout << "--------------------" << endl;
+	cout << "비디오 대여 프로그램 " << endl;
+	cout << "--------------------" << endl << endl;
+	cout << "비디오 대여" << endl;
+	cout << "-------------------" << endl << endl << endl;
+	cout << "사용자의 연락처를 입력해주세요. ";
+
+	cin >> unumber;
+
+	if (!cin)
+	{
+		system("cls");
+		cout << "잘못된 입력입니다." << endl;
+		cin.clear();
+		cin.ignore(10, '\n');
+	}
+
+	list<User>::iterator it;
+	for (it = user_list.begin(); it != user_list.end(); it++) {
+		if ((*it).unumber == unumber) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "비디오 대여" << endl;
+			cout << "-------------------" << endl << endl << endl;
+			cout << "비디오의 고유번호를 입력해주세요." << endl;
+
+			cin >> vnumber;
+
+			list<Video>::iterator it2;
+			for (it2 = video_list.begin(); it2 != video_list.end(); it2++) {
+				if ((*it2).vnumber == vnumber) {
+					system("cls");
+					cout << "--------------------" << endl;
+					cout << "비디오 대여 프로그램 " << endl;
+					cout << "--------------------" << endl << endl;
+					cout << "비디오 대여" << endl;
+					cout << "-------------------" << endl << endl << endl;
+					(*it2).vuser = unumber;
+					cout << (*it).uname << " 사용자 님의 " << (*it2).vname << " 대여가 완료되었습니다." << endl;
+					return ;
+				}
+			}
+		}
+	}
+	cout << "잘못된 입력값입니다. 다시 시도해주세요.\n";
 	return ;
 }
 
@@ -242,15 +413,95 @@ void show(list<User>& user_list, list<Video>& video_list) //4.출력
 			for (it = user_list.begin(); it != user_list.end(); it++) {	
 				if ((*it).ucan == "X") {
 					cout << (*it).uname << "     " << (*it).unumber << "     " << (*it).ucan << "     " << (*it).uday << "     " << (*it).urday << "\n";
+					sc = true;
 				}
 			}
+
+			if (sc == true) {
+				return;
+			}
+			cout << "검색 결과가 없습니다.\n";
 			return;
 		}
 	}
 
 	if (a == 2) {
 		system("cls");
-		cout << "2를 눌렀다." << endl;
+		cout << "--------------------" << endl;
+		cout << "비디오 대여 프로그램 " << endl;
+		cout << "--------------------" << endl << endl;
+		cout << "1. 전체 비디오 목록" << endl << "2. 대출가능 비디오 목록" << endl << "3. 대출중 비디오 목록" << endl;
+		cout << "-------------------" << endl << endl << endl;
+		cout << "무엇을 출력하시겠습니까? ";
+
+		int b = 0;
+		cin >> b;
+		bool sc = false;
+		list<Video>::iterator it; // = int i
+
+
+		if (!cin)
+		{
+			system("cls");
+			cout << "잘못된 입력입니다." << endl;
+			cin.clear();
+			cin.ignore(10, '\n');
+		}
+
+		if (b == 1) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "이  름  ｜    고유번호     ｜    대출자" << endl;
+
+			for (it = video_list.begin(); it != video_list.end(); it++) { 
+				cout << (*it).vname << "     " << (*it).vnumber << "     " << (*it).vuser << "\n";
+			}
+			return;
+		}
+
+		if (b == 2) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "이  름  ｜    고유번호     ｜    대출자" << endl;
+
+			for (it = video_list.begin(); it != video_list.end(); it ++ ) {
+				if ((*it).vuser == "-") {
+					cout << (*it).vname << "     " << (*it).vnumber << "     " << (*it).vuser << "\n";
+					sc = true;
+				}
+			}
+
+			if (sc == true) {
+				return;
+			}
+			cout << "검색 결과가 없습니다.\n";
+			return;
+		}
+
+		if (b == 3) {
+			system("cls");
+			cout << "--------------------" << endl;
+			cout << "비디오 대여 프로그램 " << endl;
+			cout << "--------------------" << endl << endl;
+			cout << "이  름  ｜    고유번호     ｜    대출자" << endl;
+
+			for (it = video_list.begin(); it != video_list.end(); it++) {
+				if ((*it).vuser != "-") {
+					cout << (*it).vname << "     " << (*it).vnumber << "     " << (*it).vuser << "\n";
+					sc = true;
+				}
+			}
+
+			if (sc == true) {
+				return;
+			}
+			cout << "검색 결과가 없습니다.\n";
+			return;
+		}
 	}
 
 	if (a == 3) {
@@ -578,7 +829,7 @@ void vsave(list<Video>&video_list) // 비디오 저장
 	fout.open("video.txt");
 	list<Video>::iterator it = video_list.begin();
 	for (it; it != video_list.end(); it++) {
-		fout << (*it).vname << " " << (*it).vnumber << "\n";
+		fout << (*it).vname << " " << (*it).vnumber << " " << (*it).vuser << "\n";
 	}
 	fout.close();
 }
@@ -602,9 +853,9 @@ int main() // 메인
 	list<Video> video_list;
 	if (fin.fail() == false) {
 		while (1) {
-			string vname, vnumber;
-			fin >> vname >> vnumber;
-			video_list.push_back({ vname, vnumber });
+			string vname, vnumber, vuser;
+			fin >> vname >> vnumber >> vuser;
+			video_list.push_back({ vname, vnumber, vuser });
 			if (fin.eof())
 			{
 				break;
