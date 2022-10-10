@@ -6,7 +6,7 @@
 using namespace std;
 
 
-struct User { // 사용자 구조체
+struct User { // 사용자 구조체 테스트
 	string uname;
 	string unumber;
 	string ucan;
